@@ -22,15 +22,15 @@ Heatmap.loader <- function(
 input.filename,
 output.file ="Heatmap",
 meltData = TRUE,
-imageWidth = 1200,
+imageWidth = 1024,
 imageHeight = 800,
-pointsize = 15
+pointsize = 12
 )
 {
 
-	print("-------------------")
-	print("HeatmapLoader.R")
-	print("CREATING HEATMAP")
+	print("-------------------");
+	print("HeatmapLoader.R script started");
+	print("CREATING HEATMAP");
 
 	library(Cairo)
 	library(ggplot2)
@@ -73,14 +73,42 @@ pointsize = 15
 	#We can't draw a heatmap for a matrix with only 1 row.
 	if(nrow(mRNAData)<2) stop("||FRIENDLY||R cannot plot a heatmap with only 1 Gene/Probe. Please check your variable selection and run again.")
 	if(ncol(mRNAData)<2) stop("||FRIENDLY||R cannot plot a heatmap with only 1 Patient data. Please check your variable selection and run again.")
+
+
+	# code for MarkerSelector
+	heatmapCustomer = "default";
+	if ( imageWidth == -1 | imageWidth == -1 || pointsize == -1 )
+	{
+		heatmapCustomer = "MarkerSelector";
+		sizes = dim(mRNAData);
+		numRows = as.numeric( sizes[1] );
+		numCols = as.numeric( sizes[2] );
+	
+		imageWidth = numCols * as.numeric( 50 );
+		imageHeight = numRows *as.numeric( 40 );
+
+		pointsize = 12;
+	}
+
 	
 	#Prepare the package to capture the image file.
-	CairoPNG(file=paste(output.file,".png",sep=""),width=as.numeric(imageWidth),height=as.numeric(imageHeight),pointsize=as.numeric(pointsize))
+	CairoPNG(
+		file=paste(output.file,".png",sep=""),
+		width=as.numeric(imageWidth),
+		height=as.numeric(imageHeight),
+		pointsize=as.numeric(pointsize)
+	);
+
+	
+
+
 	
 	colorPanelList <- colorpanel(100,low="green",mid="black",high="red")
 	
 	#Store the heatmap in a temp variable.
-	tmp <- heatmap(
+	if ( heatmapCustomer == "default" )
+	{
+		tmp <- heatmap(
 			mRNAData,
 			Rowv=NA,
 			Colv=NA,
@@ -89,11 +117,26 @@ pointsize = 15
 			cexRow=1.5,
 			cexCol=1.5
 			)
+	}
+	else if ( heatmapCustomer == "MarkerSelector" )
+	{
+		tmp <- heatmap.2(
+			mRNAData,
+			Rowv=NA,
+			Colv=NA,
+			key=FALSE,
+			col=colorPanelList,
+			margins=c(20,20),
+			cexRow=1.5,
+			cexCol=1.5,
+		);
+	}
 
-	
+
 	#Print the heatmap to an image
-	print (tmp)		
+	print (tmp);	
 	
-	dev.off()
-	print("-------------------")
+	dev.off();
+	print("HeatmapLoader.R script finished")
+	print("-------------------");
 }

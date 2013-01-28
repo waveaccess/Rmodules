@@ -27,6 +27,7 @@ numberOfMarkers = 100
 {
 	##########################################
 	print("-------------------")
+	print("MarkerSelector.R script started")
 	print("CMS.R")
 	print("CREATING CMS")
 	
@@ -253,6 +254,7 @@ numberOfMarkers = 100
 	write.matrix(finalHeatmapData,'heatmapdata',sep = "\t")
 	#---------------------
 	
+	print("MarkerSelector.R script finished")
 	print("-------------------")
 	##########################################
 }

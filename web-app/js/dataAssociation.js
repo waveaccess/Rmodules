@@ -758,7 +758,7 @@ function validateCommonHeatmapImageAttributes(formParams)
 		return false;			
 	}	
 	
-	if(document.getElementById("txtImageWidth").value < 1 || document.getElementById("txtImageWidth").value > 9000)
+	/*if(document.getElementById("txtImageWidth").value < 1 || document.getElementById("txtImageWidth").value > 9000)
 	{
 		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Image Width" text box that is greater than 0 and less than 9000.');
 		return false;			
@@ -774,7 +774,7 @@ function validateCommonHeatmapImageAttributes(formParams)
 	{
 		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Text Size" text box that is greater than 0 and less than 100.');
 		return false;			
-	}	
+	}*/
 
 	return true;
 }

@@ -74,12 +74,15 @@
 			<tr>
 				<td>
 					<div id = "displaydivIndependentVariable"></div>
+					<input type="hidden" id="txtImageWidth" value="-1" />
+					<input type="hidden" id="txtImageHeight" value="-1" />
+					<input type="hidden" id="txtImagePointsize" value="-1" />
 				</td>
 			</tr>
 			<tr><td><br/></td></tr>			
-			<tr>
+			<!--tr>
 				<td align="center">
-					Image Width (pixels) :  <input id="txtImageWidth" value="1200" />					
+					<Image Width (pixels) :  <input type="hidden" id="txtImageWidth" value="-1" />
 					<br />
 					<br />
 				</td>
@@ -87,7 +90,7 @@
 			<tr><td><br/></td></tr>
 			<tr>
 				<td align="center">
-					Image Height (pixels) :  <input id="txtImageHeight" value="800" />					
+					Image Height (pixels) :  <input type="hidden" id="txtImageHeight" value="-1" />
 					<br />
 					<br />
 				</td>
@@ -95,12 +98,12 @@
 			<tr><td><br/></td></tr>
 			<tr>
 				<td align="center">
-					Text size (pointsize) :  <input id="txtImagePointsize" value="12" />					
+					Text size (pointsize) :  <input type="hidden" id="txtImagePointsize" value="-1" />
 					<br />
 					<br />
 				</td>
 			</tr>							
-			<tr><td><br/></td></tr>
+			<tr><td><br/></td></tr-->
 			<tr>
 				<td colspan="4" align="center">
 					<input type="button" value="Run" onClick="submitMarkerSelectionJob(this.form);"></input>

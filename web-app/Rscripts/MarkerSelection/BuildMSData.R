@@ -38,7 +38,7 @@ output.dataFile="outputfile"
 {
 	##########################################
 	print("-------------------")
-	print("BuildCMSData.R")
+	print("BuildCMSData.R script started")
 	print("BUILDING CMS DATA")
 	
 	#Call a function to gather the gene expression data and filter the two subsets.
@@ -72,6 +72,7 @@ output.dataFile="outputfile"
 	
 	#Write the final data file.
 	write.matrix(finalFrame,output.dataFile,sep = "\t")
+	print("BuildCMSData.R script finished")
 	print("-------------------")
 	##########################################
 }
