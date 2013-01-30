@@ -18,18 +18,25 @@
 #Heatmap Loader
 ###########################################################################
 
+#
+# 29.01.2013 Leo Romanovsky - added heatmap.customer, building heatmap for MarkerSelection
+#
+#
+#
+#
+#
 Heatmap.loader <- function(
 input.filename,
 output.file ="Heatmap",
 meltData = TRUE,
 imageWidth = 1024,
 imageHeight = 800,
-pointsize = 12
-)
-{
-
+pointsize = 12,
+heatmap.customer = "default"
+) {
 	print("-------------------");
-	print("HeatmapLoader.R script started");
+	print( "HeatmapLoader.R script started" );
+	print( cat( "Heatmap customer : ", heatmap.customer, " " ) );
 	print("CREATING HEATMAP");
 
 	library(Cairo)
@@ -61,7 +68,6 @@ pointsize = 12
 		
 		#Use only unique row names. This unique should get rid of the case where we have multiple genes per probe. The values for the probes are all the same.
 		mRNAData <- unique(mRNAData)
-		
 	}
 	
 	#Set the name of the rows to be the names of the probes.
@@ -74,40 +80,49 @@ pointsize = 12
 	if(nrow(mRNAData)<2) stop("||FRIENDLY||R cannot plot a heatmap with only 1 Gene/Probe. Please check your variable selection and run again.")
 	if(ncol(mRNAData)<2) stop("||FRIENDLY||R cannot plot a heatmap with only 1 Patient data. Please check your variable selection and run again.")
 
+	sizes = dim(mRNAData);
+	numRows = as.numeric( sizes[1] );
+	numCols = as.numeric( sizes[2] );
 
-	# code for MarkerSelector
-	heatmapCustomer = "default";
-	if ( imageWidth == -1 | imageWidth == -1 || pointsize == -1 )
+
+	# setting default values, if needed
+	print("Default sizes...");
+	if ( as.numeric(pointsize) < 0 )
 	{
-		heatmapCustomer = "MarkerSelector";
-		sizes = dim(mRNAData);
-		numRows = as.numeric( sizes[1] );
-		numCols = as.numeric( sizes[2] );
-	
-		imageWidth = numCols * as.numeric( 50 );
-		imageHeight = numRows *as.numeric( 40 );
-
+		print("Setting default point size...");
 		pointsize = 12;
 	}
+	if ( imageWidth < 0 )
+	{
+		print("Setting default imageWidth size...");
+		imageWidth = numCols * as.numeric( 50 );
+	}
+	if ( imageHeight < 0 )
+	{
+		print("Setting default imageHeight size...");
+		imageHeight = numRows * as.numeric( 25 );
+	}
+	
+	print( cat("imageWidth = ", imageWidth ) );
+	print( cat("imageHeight = ", imageHeight ) );
 
 	
 	#Prepare the package to capture the image file.
+	print( "Creating image for output data..." );
 	CairoPNG(
 		file=paste(output.file,".png",sep=""),
 		width=as.numeric(imageWidth),
 		height=as.numeric(imageHeight),
 		pointsize=as.numeric(pointsize)
 	);
-
 	
 
-
-	
 	colorPanelList <- colorpanel(100,low="green",mid="black",high="red")
 	
 	#Store the heatmap in a temp variable.
-	if ( heatmapCustomer == "default" )
+	if ( heatmap.customer == "default" )
 	{
+		print( "Building heatmap..." );
 		tmp <- heatmap(
 			mRNAData,
 			Rowv=NA,
@@ -118,17 +133,20 @@ pointsize = 12
 			cexCol=1.5
 			)
 	}
-	else if ( heatmapCustomer == "MarkerSelector" )
+	else if ( heatmap.customer == "MarkerSelection" )
 	{
+		print( "Building heatmap.2..." );
 		tmp <- heatmap.2(
 			mRNAData,
-			Rowv=NA,
-			Colv=NA,
-			key=FALSE,
-			col=colorPanelList,
-			margins=c(20,20),
-			cexRow=1.5,
-			cexCol=1.5,
+			Rowv = NA,
+			Colv = NA,
+			key = FALSE,
+			col = colorPanelList,
+			margins = c(20,20),
+			cexRow = 1.5,
+			cexCol = 1.5,
+			lhei = c( 0.05, 3 ),
+			#lwid = c( 0.05, 3 )
 		);
 	}
 

@@ -87,10 +87,10 @@ numberOfMarkers = 100
 	coercedDataWithoutGroup <- data.matrix(subset(coercedData, select=-c(GENE_SYMBOL,PROBE.ID)))
 
 	#Get a vector representing our subsets.
-	classVector <- colnames(coercedDataWithoutGroup)
-	classVector <- gsub("^S1.*","0",classVector)
-	classVector <- gsub("^S2.*","1",classVector)
-	classVector <- as.numeric(classVector)
+	classVector <- colnames(coercedDataWithoutGroup);
+	classVector <- gsub("^S1.*","0",classVector);
+	classVector <- gsub("^S2.*","1",classVector);
+	classVector <- as.numeric(classVector);
 	
 	#Check the class vector to verify we have two subsets.
 	if(length(unique(classVector)) < 2) stop("||FRIENDLY||There is only one subset selected, please select two in order to run the comparative analysis.")

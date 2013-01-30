@@ -69,41 +69,85 @@
 				<td>
 					Number of Markers : <input id="txtNumberOfMarkers" name="txtNumberOfMarkers" value="50" />
 				</td>
+
 			</tr>			
-			<tr><td><br/></td></tr>
+			<tr><td><br/></td></tr-->
 			<tr>
 				<td>
 					<div id = "displaydivIndependentVariable"></div>
-					<input type="hidden" id="txtImageWidth" value="-1" />
-					<input type="hidden" id="txtImageHeight" value="-1" />
-					<input type="hidden" id="txtImagePointsize" value="-1" />
+					<!--input type="hidden" id="txtImageWidth" value="1200" />
+					<input type="hidden" id="txtImageHeight" value="800" />
+					<input type="hidden" id="txtImagePointsize" value="12" /-->
 				</td>
-			</tr>
-			<tr><td><br/></td></tr>			
-			<!--tr>
+			</tr-->
+			<tr><td><br/></td></tr>		
+			<tr>
 				<td align="center">
-					<Image Width (pixels) :  <input type="hidden" id="txtImageWidth" value="-1" />
+					Use default sizes :  
+					<input 
+						type=checkbox 
+						id="useDefaultHeatmapProperties" 
+						checked="true" 
+						onclick="
+							document.getElementById('txtImageWidth').disabled = this.checked;
+							document.getElementById('txtImageHeight').disabled = this.checked;
+							document.getElementById('txtImagePointsize').disabled = this.checked;
+							if ( this.checked )
+							{
+								/* use default values from R script */
+								document.getElementById('txtImageWidth').value = -1;
+								document.getElementById('txtImageHeight').value = -1;
+								document.getElementById('txtImagePointsize').value = -1;
+								/* hide dom objects */
+								var toHide = document.getElementsByClassName('HeatmapImageProperties');
+								for(var i=0; i < toHide.length; i++) { 
+									toHide[i].style.visibility='collapse';
+									//toHide[i].style.display='none';
+								}
+							} else {
+								/* use some default values - user will set, as he likes */
+								document.getElementById('txtImageWidth').value = 2000;
+								document.getElementById('txtImageHeight').value = 3000;
+								document.getElementById('txtImagePointsize').value = 12;
+								/* hide dom objects */
+								var toShow = document.getElementsByClassName('HeatmapImageProperties');
+								for(var i=0; i < toShow.length; i++) { 
+									toShow[i].style.visibility='visible';
+									//toShow[i].style.visibility='table-row';
+								}
+							}
+						"
+					/>
 					<br />
 					<br />
 				</td>
 			</tr>				
-			<tr><td><br/></td></tr>
-			<tr>
+
+			<tr class="HeatmapImageProperties" style="visibility: collapse;"><td><br/></td></tr>		
+			<tr class="HeatmapImageProperties" style="visibility: collapse;">
 				<td align="center">
-					Image Height (pixels) :  <input type="hidden" id="txtImageHeight" value="-1" />
+					Image Width (pixels) :  <input id="txtImageWidth" value="-1" />
 					<br />
 					<br />
 				</td>
 			</tr>				
-			<tr><td><br/></td></tr>
-			<tr>
+			<tr class="HeatmapImageProperties" style="visibility: collapse;"><td><br/></td></tr>
+			<tr class="HeatmapImageProperties" style="visibility: collapse;">
 				<td align="center">
-					Text size (pointsize) :  <input type="hidden" id="txtImagePointsize" value="-1" />
+					Image Height (pixels) :  <input id="txtImageHeight" value="-1" />
+					<br />
+					<br />
+				</td>
+			</tr>				
+			<tr class="HeatmapImageProperties" style="visibility: collapse;"><td><br/></td></tr>
+			<tr class="HeatmapImageProperties" style="visibility: collapse;">
+				<td align="center">
+					Text size (pointsize) :  <input id="txtImagePointsize" value="-1" />
 					<br />
 					<br />
 				</td>
 			</tr>							
-			<tr><td><br/></td></tr-->
+			<tr><td><br/></td></tr>
 			<tr>
 				<td colspan="4" align="center">
 					<input type="button" value="Run" onClick="submitMarkerSelectionJob(this.form);"></input>

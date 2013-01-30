@@ -720,8 +720,20 @@ function loadCommonHeatmapImageAttributes(formParams)
 	formParams["txtTextSize"]		=	document.getElementById("txtImagePointsize").value
 }
 
+//
+// 29.01.2013 Leo Romanovsky -- added code for useDefaultHeatmapProperties checkbox (MarkerSelector template)
+//
+//
+//
 function validateCommonHeatmapImageAttributes(formParams)
 {
+
+	var useDefaultHeatmapImageSettingsCheckbox = document.getElementById("useDefaultHeatmapProperties");
+	var canSetNegativeSizes = (useDefaultHeatmapImageSettingsCheckbox != null && useDefaultHeatmapImageSettingsCheckbox.checked == true );
+	var canSetNegativeFontSize = (useDefaultHeatmapImageSettingsCheckbox != null && useDefaultHeatmapImageSettingsCheckbox.checked == true );
+	
+	//Ext.Msg.alert('Testing', 'canSetNegativeSizes is\n' + canSetNegativeSizes);
+
 	if(document.getElementById("txtImageWidth").value == '')
 	{
 		Ext.Msg.alert('Wrong input', 'Please enter the image width in the "Image Width" text box.');
@@ -738,7 +750,8 @@ function validateCommonHeatmapImageAttributes(formParams)
 	{
 		Ext.Msg.alert('Wrong input', 'Please enter the desired size of text on the image file in the "Text Size" text box.');
 		return false;			
-	}	
+	}
+
 	
 	if(!isNumber(document.getElementById("txtImageWidth").value))
 	{
@@ -775,6 +788,23 @@ function validateCommonHeatmapImageAttributes(formParams)
 		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Text Size" text box that is greater than 0 and less than 100.');
 		return false;			
 	}*/
+	if( (document.getElementById("txtImageWidth").value < 1 && !canSetNegativeSizes) || document.getElementById("txtImageWidth").value > 9000)
+	{
+		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Image Width" text box that is greater than 0 and less than 9000.');
+		return false;			
+	}	
+
+	if( (document.getElementById("txtImageHeight").value < 1 && !canSetNegativeSizes) || document.getElementById("txtImageHeight").value > 9000)
+	{
+		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Image Height" text box that is greater than 0 and less than 9000.');
+		return false;			
+	}	
+	
+	if( (document.getElementById("txtImagePointsize").value < 1 && !canSetNegativeFontSize) || document.getElementById("txtImagePointsize").value > 100)
+	{
+		Ext.Msg.alert('Wrong input', 'Please enter a valid integer into the "Text Size" text box that is greater than 0 and less than 100.');
+		return false;			
+	}
 
 	return true;
 }
