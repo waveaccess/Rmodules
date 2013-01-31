@@ -31,12 +31,14 @@ output.file ="Heatmap",
 meltData = TRUE,
 imageWidth = 1024,
 imageHeight = 800,
-pointsize = 12,
-heatmap.customer = "default"
+pointsize = 12#,
+#heatmap.customer = "default"
 ) {
 	print("-------------------");
 	print( "HeatmapLoader.R script started" );
-	print( cat( "Heatmap customer : ", heatmap.customer, " " ) );
+	print( cat("pointsize", pointsize, "\t\t") );
+	print( cat("imageWidth", imageWidth, "\t\t") );
+	print( cat("imageHeight", imageHeight, "\t\t") );
 	print("CREATING HEATMAP");
 
 	library(Cairo)
@@ -83,6 +85,15 @@ heatmap.customer = "default"
 	sizes = dim(mRNAData);
 	numRows = as.numeric( sizes[1] );
 	numCols = as.numeric( sizes[2] );
+
+
+
+	# define, who is heatmaps customer
+	heatmap.customer = "default";
+	if ( pointsize == -1 )
+		heatmap.customer = "MarkerSelection";
+
+	print( cat( "Heatmap customer : ", heatmap.customer, " " ) );
 
 
 	# setting default values, if needed
